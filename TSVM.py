@@ -6,16 +6,14 @@ import sklearn.svm as svm
 from sklearn import datasets
 from sklearn.preprocessing import StandardScaler
 
-# balanced data，each class has the same volume of every kind of data
-#iris = datasets.load_iris()
+
 data = pd.read_csv('dataset.csv',header=None)
 label = pd.read_csv('label.csv',header=None)
 data = np.array(data)
 label = np.array(label).T
 label = label[0]
-label = (label-0.5)*2
-# data, label = iris.data[50:, [0, 3]], iris.target[50:] * 2 - 3  # 标签变为-1,1
-#data, label = iris.data[50:, :], iris.target[50:] * 2 - 3  # 4 attributes
+label = (label-0.5)*2#标签变为-1，1
+
 # standardizing
 sc = StandardScaler()
 sc.fit(data)
@@ -26,7 +24,7 @@ l_d, l_c = np.concatenate((data[65:75], data[140:])), np.concatenate((label[65:7
 u_d = np.concatenate((data[15:65], data[90:140]))  # 100训练集
 lu_d = np.concatenate((l_d, u_d))
 n = len(l_d)+len(u_d)
-# u_d, u_c = np.concatenate((data[20:50], data[70:])), np.concatenate((label[20:50], label[70:]))  # 60
+
 
 clf1 = svm.SVC(C=1,kernel='linear')
 clf1.fit(l_d, l_c)
